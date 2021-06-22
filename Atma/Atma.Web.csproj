@@ -21,5 +21,10 @@
     <ProjectReference Include="..\Atma.DataAccess\Atma.DataAccess.csproj" />
   </ItemGroup>
 
+    <ItemGroup>
+	    <None Include="app.yaml" CopyToOutputDirectory="PreserveNewest" />
+	    <None Include="Dockerfile" CopyToOutputDirectory="PreserveNewest" />
+    </ItemGroup>
+
 
 </Project>
