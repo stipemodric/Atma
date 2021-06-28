@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>Atma.Web</RootNamespace>
+    <UserSecretsId>412e41b0-e5cd-44f8-b7bb-43eb160f4d13</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,6 +14,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="3.0.13" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.4" />
   </ItemGroup>
 
@@ -25,6 +27,5 @@
 	    <None Include="app.yaml" CopyToOutputDirectory="PreserveNewest" />
 	    <None Include="Dockerfile" CopyToOutputDirectory="PreserveNewest" />
     </ItemGroup>
-
 
 </Project>

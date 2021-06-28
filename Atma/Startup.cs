@@ -32,7 +32,17 @@ namespace Atma
         {
             services.AddControllers();
 
-            services.AddDbContextPool<AtmaDbContext>(options => options.UseSqlServer(_config.GetConnectionString("AtmaDbConnection")));
+            //services.AddDbContextPool<AtmaDbContext>(options => options.UseSqlServer(_config.GetConnectionString("AtmaDbConnection")));
+
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
+                services.AddDbContext<AtmaDbContext>(options =>
+                    options.UseSqlServer(_config.GetConnectionString("AtmaDbConnectionProd")));
+            else
+                services.AddDbContext<AtmaDbContext>(options =>
+                    options.UseSqlServer(_config.GetConnectionString("AtmaDbConnection")));
+
+            // Automatically perform database migration
+            services.BuildServiceProvider().GetService<AtmaDbContext>().Database.Migrate();
 
             services.AddSwaggerGen(c =>
             {
@@ -55,6 +65,13 @@ namespace Atma
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
+                app.UseSwagger();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "MyAPI V1");
+                    c.RoutePrefix = string.Empty;
+                });
             }
 
             app.UseHttpsRedirection();
@@ -66,13 +83,6 @@ namespace Atma
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-            });
-
-            
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("v1/swagger.json", "MyAPI V1");
             });
         }
     }
